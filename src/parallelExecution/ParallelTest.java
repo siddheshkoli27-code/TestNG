@@ -8,31 +8,27 @@ import org.testng.annotations.Test;
 
 public class ParallelTest {
 	
-	public WebDriver driver;
+	ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 	
 	@Test
 	public void FirefoxTest() throws InterruptedException {
-		driver = new FirefoxDriver();
-		driver.get("https://www.saucedemo.com/");
-		Thread.sleep(2000);
-		driver.findElement(By.id("user-name")).sendKeys("shital");
-		Thread.sleep(2000);
-		driver.findElement(By.id("password")).sendKeys("secret_sauce");
-		Thread.sleep(2000);
-		driver.close();
+		driver.set(new FirefoxDriver());
+		driver.get().get("https://www.saucedemo.com/");
+		driver.get().findElement(By.id("user-name")).sendKeys("shital");
+		driver.get().findElement(By.id("password")).sendKeys("secret_sauce");
+		driver.get().close();
 		
 	}
 	
 	@Test
 	public void ChromeTest() throws InterruptedException {
-		driver = new ChromeDriver();
-		Thread.sleep(10000);
-		driver.get("https://demoqa.com/text-box");
+		driver.set(new ChromeDriver());
+		driver.get().get("https://demoqa.com/text-box");
 		Thread.sleep(2000);
-		driver.findElement(By.id("userName")).sendKeys("Siddhesh");
+		driver.get().findElement(By.id("userName")).sendKeys("Siddhesh");
 		Thread.sleep(2000);
-		driver.findElement(By.id("userEmail")).sendKeys("test12@gmail.com");
-		driver.close();
+		driver.get().findElement(By.id("userEmail")).sendKeys("test12@gmail.com");
+		driver.get().close();
 		
 	}
 
